@@ -39,4 +39,10 @@ public class PercussionFragment extends Fragment {
         mKonashiManager.pinMode(Konashi.PIO2, Konashi.INPUT);
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        if (mKonashiManager.isConnected()) mKonashiManager.disconnect();
+        super.onDestroyView();
+    }
 }

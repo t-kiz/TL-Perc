@@ -45,7 +45,7 @@ public class TLPercActivity extends KonashiActivity {
                 break;
             case DISCONNECTED:
                 Toast.makeText(this, "接続切れたでｗ", Toast.LENGTH_LONG).show();
-                transitionFindKonashiFragment();
+                getFragmentManager().popBackStack();
                 break;
         }
     }
@@ -58,14 +58,15 @@ public class TLPercActivity extends KonashiActivity {
     private void transitionFindKonashiFragment() {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.root_container, FindKonashiFragment.newInstance())
+                .replace(R.id.root_container, FindKonashiFragment.newInstance(), FindKonashiFragment.TAG)
                 .commit();
     }
 
     private void transitionPercussionFragment() {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.root_container, PercussionFragment.newInstance())
+                .addToBackStack(FindKonashiFragment.TAG)
+                .replace(R.id.root_container, PercussionFragment.newInstance(), PercussionFragment.TAG)
                 .commit();
     }
 }
