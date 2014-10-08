@@ -1,0 +1,3 @@
+[submodule "modules/konashi-sdk"]
+	path = modules/konashi-sdk
+	url = https://github.com/YUKAI/konashi-android-sdk.git

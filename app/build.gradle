@@ -27,5 +27,6 @@ dependencies {
     // TODO: mavenCentralから取ってこれないので.jarを追加して対処
 //    compile 'jp.co.nohana:Amalgam:0.3.2'
     compile 'info.izumin.android:daggerhelpers:0.0.1'
+    compile project(':modules:Konashi')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

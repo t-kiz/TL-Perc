@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res" >
+            <file
+                name="ic_launcher"
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/drawable-hdpi/ic_launcher.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/drawable-mdpi/ic_launcher.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/drawable-xhdpi/ic_launcher.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="device_list_element"
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/layout/device_list_element.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="dialog_device_list"
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/layout/dialog_device_list.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/values/colors.xml"
+                qualifiers="" >
+                <color name="konashi_lib_device_list_element_address_text" >#777777
+                </color>
+                <color name="konashi_lib_device_list_element_name_text" >#333333
+                </color>
+                <color name="konashi_lib_dialog_device_list_not_found" >#333333
+                </color>
+                <color name="konashi_lib_dialog_device_list_finding_text" >#888888
+                </color>
+            </file>
+            <file
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/values/dimens.xml"
+                qualifiers="" >
+                <dimen name="konashi_lib_dialog_device_list_finding_text_margin_left" >3dp
+                </dimen>
+                <dimen name="konashi_lib_dialog_device_list_not_found_text_size" >20dp
+                </dimen>
+                <dimen name="konashi_lib_dialog_device_list_finding_text_size" >12dp
+                </dimen>
+                <dimen name="konashi_lib_device_list_element_margin" >10dp
+                </dimen>
+                <dimen name="konashi_lib_device_list_element_name_text_size" >20dp
+                </dimen>
+                <dimen name="konashi_lib_device_list_height" >300dp
+                </dimen>
+                <dimen name="konashi_lib_device_list_element_device_name_margin_bottom" >3dp
+                </dimen>
+                <dimen name="konashi_lib_device_list_element_address_text_size" >14dp
+                </dimen>
+                <dimen name="konashi_lib_dialog_device_list_finding_margin" >4dp
+                </dimen>
+                <dimen name="konashi_lib_dialog_device_list_not_found_margin" >10dp
+                </dimen>
+            </file>
+            <file
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/values/strings.xml"
+                qualifiers="" >
+                <string name="konashi_lib_ble_not_supported" >BLE not supported on this device.
+                </string>
+                <string name="konashi_lib_dialog_device_list_finding_text" >Finding konashi
+                </string>
+                <string name="konashi_lib_dialog_device_list_not_found" >konashi Not Found...
+                </string>
+                <string name="konashi_lib_dialog_device_list_cancel_button" >Cancel
+                </string>
+                <string name="konashi_lib_dialog_device_list_title" >Select konashi
+                </string>
+                <string name="konashi_lib_device_list_element_unknown_device" >Unknown Device
+                </string>
+            </file>
+            <file
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/values/styles.xml"
+                qualifiers="" >
+
+                <style
+                    name="AppTheme"
+                    parent="AppBaseTheme" >
+
+                    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+                </style>
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Light" >
+
+                    <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+                    -->
+                </style>
+            </file>
+            <file
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/values-v11/styles.xml"
+                qualifiers="v11" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo.Light" >
+
+                    <!-- API 11 theme customizations can go here. -->
+                </style>
+            </file>
+            <file
+                path="/Users/izumin/Documents/works/tlperc/modules/Konashi/res/values-v14/styles.xml"
+                qualifiers="v14" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo.Light.DarkActionBar" >
+
+                    <!-- API 14 theme customizations can go here. -->
+                </style>
+            </file>
+        </source>
+        <source path="/Users/izumin/Documents/works/tlperc/modules/Konashi/build/generated/res/rs/release" />
+        <source path="/Users/izumin/Documents/works/tlperc/modules/Konashi/build/generated/res/generated/release" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/Users/izumin/Documents/works/tlperc/modules/Konashi/build-types/release/res" />
+    </dataSet>
+
+</merger>
