@@ -1,0 +1,67 @@
+
+header {
+  padding: 50px 0 0;
+  h1 {
+    margin: 100px auto;
+    height: 300px;
+    width: 300px;
+    background: url("../img/logo.png") center center no-repeat;
+    span {
+      display: none;
+    }
+  }
+}
+
+hr {
+  height:0;
+  border:0;
+  border-top:1px solid $brand-color-500;
+  border-bottom:1px solid $brand-color-700;
+}
+
+section {
+  padding: 20px;
+  ul.card-list {
+    text-align: center;
+    li {
+      display: inline-block;
+      margin: 10px;
+      background: $light-gray-900;
+      border-radius: 5px;
+      box-shadow: 0px 2px 2px 1px $brand-color-300;
+      &:hover {
+        margin: 11px 10px 9px;
+        box-shadow: 0px 1px 2px 1px $brand-color-300;
+        background: $light-gray-700;
+      }
+      a {
+        display: block;
+        padding: 25px;
+        text-decoration: none;
+        img {
+          display: block;
+          width: 150px;
+          height: 150px;
+          margin: 0 0 10px;
+        }
+        span {
+          color: black;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .movie-box {
+    margin: 0 auto;
+    width: 800px;
+    height: 450px;
+    box-shadow: 0px 2px 2px 1px $brand-color-300;
+  }
+  p {
+    margin: 10px 100px;
+  }
+}
+
+footer {
+  padding: 20px;
+}

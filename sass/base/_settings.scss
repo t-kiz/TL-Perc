@@ -1,0 +1,27 @@
+$brand-color-700: #dddddd;
+$brand-color-600: #bbbbbb;
+$brand-color-500: #999999;
+$brand-color-400: #777777;
+$brand-color-300: #555555;
+
+$light-gray-900: #eee;
+$light-gray-700: #ddd;
+$light-gray-500: #ccc;
+$light-gray-300: #bbb;
+$light-gray-100: #aaa;
+
+
+html, body {
+  margin: 0 auto;
+  max-width: 960px;
+  font-family: Verdana, "游ゴシック", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  background: url(../img/bg.jpg) center center;
+  color: black;
+}
+
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
