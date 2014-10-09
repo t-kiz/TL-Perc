@@ -15,13 +15,16 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import info.izumin.android.tlperc.R;
 import info.izumin.android.tlperc.model.BusProvider;
+import info.izumin.android.tlperc.model.SoundManager;
 import info.izumin.android.tlperc.model.TLPercKonashiObserver;
 
 public class TLPercActivity extends KonashiActivity {
     public static final String TAG = TLPercActivity.class.getSimpleName();
 
     private static final String DIALOG_FRAGMENT = "dialog fragment";
+    private static final String SE_CONNECTED = "Connected", SE_DISCONNECTED = "Disconnected";
 
+    private SoundManager mSoundManager;
     private TLPercKonashiObserver mKonashiObserver;
     private ProgressDialogFragment mConnectingProcessDialog;
     private Crouton mConnectedToast, mDisconnectedToast;
@@ -49,11 +52,13 @@ public class TLPercActivity extends KonashiActivity {
                 mConnectingProcessDialog.show(getFragmentManager(), DIALOG_FRAGMENT);
                 break;
             case READY:
-                mConnectedToast.show();
                 mConnectingProcessDialog.dismiss();
+                mSoundManager.play(SE_CONNECTED);
+                mConnectedToast.show();
                 transitionPercussionFragment();
                 break;
             case DISCONNECTED:
+                mSoundManager.play(SE_DISCONNECTED);
                 mConnectedToast.cancel();
                 mDisconnectedToast.show();
                 getFragmentManager().popBackStack();
@@ -73,6 +78,9 @@ public class TLPercActivity extends KonashiActivity {
         mConnectingProcessDialog = ProgressDialogFragment.newInstance("接続中…", "Konashiに接続しています", true);
         mConnectedToast = Crouton.makeText(this, "接続できたでｗ", Style.INFO);
         mDisconnectedToast = Crouton.makeText(this, "接続切れたでｗ", Style.ALERT);
+        mSoundManager = new SoundManager(getApplicationContext());
+        mSoundManager.load(SE_CONNECTED, R.raw.connect);
+        mSoundManager.load(SE_DISCONNECTED, R.raw.disconnect);
     }
 
     private void transitionFindKonashiFragment() {
