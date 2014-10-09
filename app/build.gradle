@@ -29,6 +29,5 @@ dependencies {
         exclude group: 'com.google.android', module: 'support-v4'
     }
     compile 'info.izumin.android:daggerhelpers:0.0.1'
-    compile project(':modules:Konashi')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

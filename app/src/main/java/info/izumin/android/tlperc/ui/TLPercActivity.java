@@ -13,7 +13,6 @@ import info.izumin.android.tlperc.R;
 import info.izumin.android.tlperc.event.TLPercEvent;
 import info.izumin.android.tlperc.model.BusProvider;
 import info.izumin.android.tlperc.model.SoundManager;
-import info.izumin.android.tlperc.model.TLPercKonashiObserver;
 import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 
 public class TLPercActivity extends Activity {
