@@ -11,4 +11,25 @@
         android:src="@drawable/percussion_view"
         android:scaleType="centerCrop"/>
 
+    <ImageView android:id="@+id/btn_drums"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/btn_perc"
+        android:layout_marginEnd="96dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drums_off" />
+
+    <ImageView android:id="@+id/btn_perc"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_perc_off" />
+
+    <ImageView android:id="@+id/btn_piano"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/btn_perc"
+        android:layout_marginStart="96dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_piano_off" />
 </RelativeLayout>

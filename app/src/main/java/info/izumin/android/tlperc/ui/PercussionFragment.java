@@ -6,13 +6,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.amalgam.view.DisplayUtils;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import info.izumin.android.tlperc.R;
 import info.izumin.android.tlperc.event.BluetoothReadEvent;
 import info.izumin.android.tlperc.media.DrumsSound;
@@ -34,6 +37,10 @@ public class PercussionFragment extends Fragment {
     private SoundManager mDrumsSoundManager;
     private SoundManager mPercSoundManager;
     private SoundManager mPianoSoundManager;
+
+    @InjectView(R.id.btn_drums) ImageView mBtnDrums;
+    @InjectView(R.id.btn_perc) ImageView mBtnPerc;
+    @InjectView(R.id.btn_piano) ImageView mBtnPiano;
 
     private CharSequence mPrevData = "00";
 
@@ -97,6 +104,11 @@ public class PercussionFragment extends Fragment {
             mPianoSoundManager.load(sound.name(), sound.getRawId());
         }
         mCurrentSoundManager = mDrumsSoundManager;
+        mBtnDrums.setImageResource(R.drawable.ic_drums_on);
+        int height = - DisplayUtils.getDisplayHeight(getActivity()) / 8;
+        mBtnDrums.setTranslationY(height);
+        mBtnPerc.setTranslationY(height);
+        mBtnPiano.setTranslationY(height);
     }
 
     // TODO: bad practice
