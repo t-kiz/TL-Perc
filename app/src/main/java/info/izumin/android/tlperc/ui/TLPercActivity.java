@@ -1,14 +1,11 @@
 package info.izumin.android.tlperc.ui;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.amalgam.app.ProgressDialogFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.uxxu.konashi.lib.KonashiActivity;
-import com.uxxu.konashi.lib.KonashiErrorReason;
 import com.uxxu.konashi.lib.KonashiEvent;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -61,7 +58,6 @@ public class TLPercActivity extends KonashiActivity {
 
     @Subscribe
     public void onKonashiCallback(KonashiEvent event) {
-        Log.d(TAG, event.name());
         Crouton.cancelAllCroutons();
         switch(event) {
             case CONNECTED:
@@ -99,10 +95,12 @@ public class TLPercActivity extends KonashiActivity {
     }
 
     private void transitionPercussionFragment() {
+        PercussionFragment f = PercussionFragment.newInstance();
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack(FindKonashiFragment.TAG)
-                .replace(R.id.root_container, PercussionFragment.newInstance(), PercussionFragment.TAG)
+                .replace(R.id.root_container, f, PercussionFragment.TAG)
                 .commit();
+        f.setBluetoothHelper(mBluetoothHelper);
     }
 }

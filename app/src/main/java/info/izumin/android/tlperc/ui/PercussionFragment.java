@@ -6,14 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.uxxu.konashi.lib.Konashi;
-import com.uxxu.konashi.lib.KonashiActivity;
-import com.uxxu.konashi.lib.KonashiManager;
+import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import info.izumin.android.tlperc.R;
+import info.izumin.android.tlperc.event.BluetoothReadEvent;
 import info.izumin.android.tlperc.media.DrumsSound;
+import info.izumin.android.tlperc.model.BusProvider;
 import info.izumin.android.tlperc.model.SoundManager;
+import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 
 /**
  * Created by izumin on 2014/10/08.
@@ -21,8 +22,7 @@ import info.izumin.android.tlperc.model.SoundManager;
 public class PercussionFragment extends Fragment {
     public static final String TAG = PercussionFragment.class.getSimpleName();
 
-    private KonashiActivity mActivity;
-    private KonashiManager mKonashiManager;
+    private BluetoothHelper mBluetoothHelper;
     private SoundManager mDrumsSoundManager;
 
     public static PercussionFragment newInstance() {
@@ -39,22 +39,31 @@ public class PercussionFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mBluetoothHelper.asyncRead();
+    }
+
+    @Override
     public void onDestroyView() {
-        if (mKonashiManager.isConnected()) mKonashiManager.disconnect();
         super.onDestroyView();
     }
 
+    @Subscribe
+    public void onBluetoothReadEvent(BluetoothReadEvent event) {
+        mBluetoothHelper.asyncRead();
+    }
+
     private void initialize() {
-        mActivity = (KonashiActivity) getActivity();
-        mKonashiManager = mActivity.getKonashiManager();
-        mDrumsSoundManager = new SoundManager(mActivity.getApplicationContext());
+        BusProvider.getInstance().register(this);
+        mDrumsSoundManager = new SoundManager(getActivity().getApplicationContext());
         for (DrumsSound sound : DrumsSound.values()) {
             mDrumsSoundManager.load(sound.name(), sound.getRawId());
         }
+    }
 
-        mKonashiManager.pinMode(Konashi.S1, Konashi.INPUT);
-        mKonashiManager.pinMode(Konashi.PIO0, Konashi.INPUT);
-        mKonashiManager.pinMode(Konashi.PIO1, Konashi.INPUT);
-        mKonashiManager.pinMode(Konashi.PIO2, Konashi.INPUT);
+    // TODO: bad practice
+    public void setBluetoothHelper(BluetoothHelper helper) {
+        mBluetoothHelper = helper;
     }
 }

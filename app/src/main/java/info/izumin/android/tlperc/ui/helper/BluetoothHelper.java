@@ -7,16 +7,19 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.amalgam.os.HandlerUtils;
 import com.squareup.otto.Bus;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
+import info.izumin.android.tlperc.event.BluetoothReadEvent;
 import info.izumin.android.tlperc.event.TLPercEvent;
 import info.izumin.android.tlperc.loader.task.BluetoothConnectTask;
 import info.izumin.android.tlperc.loader.task.BluetoothDisconnectTask;
+import info.izumin.android.tlperc.loader.task.BluetoothReadTask;
 import info.izumin.android.tlperc.ui.BluetoothDeviceListDialogFragment;
 
 /**
@@ -24,6 +27,7 @@ import info.izumin.android.tlperc.ui.BluetoothDeviceListDialogFragment;
  */
 public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callback {
     public static final String TAG = BluetoothHelper.class.getSimpleName();
+    private BluetoothHelper self = this;
 
     private static final String DEVICE_LIST_FRAGMENT = "device list fragment";
 
@@ -34,6 +38,8 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
     private BluetoothAdapter mAdapter;
     private BluetoothSocket mSocket;
     private BluetoothDevice mDevice;
+
+    private BufferedReader mReader;
 
     public BluetoothHelper(Activity activity, Bus bus) {
         mActivity = activity;
@@ -49,7 +55,11 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
     }
 
     public void disconnect() {
-        mActivity.getLoaderManager().initLoader(0, null, mDisconnectCallback);
+        mActivity.getLoaderManager().initLoader(1, null, mDisconnectCallback);
+    }
+
+    public void asyncRead() {
+        mActivity.getLoaderManager().restartLoader(2, null, mReadCallback);
     }
 
     /* ================================================================
@@ -58,7 +68,6 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
 
     @Override
     public void onDeviceDecided(BluetoothDevice device) throws IOException {
-        Log.d(TAG, device.getName());
         mDevice = device;
         mSocket = device.createRfcommSocketToServiceRecord(device.getUuids()[0].getUuid());
         mActivity.getLoaderManager().initLoader(0, null, mConnectCallback);
@@ -77,12 +86,17 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
 
                 @Override
                 public void onLoadFinished(Loader<Void> loader, Void data) {
-                    HandlerUtils.postOnMain(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBus.post(TLPercEvent.CONNECTED);
-                        }
-                    });
+                    try {
+                        mReader = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
+                        HandlerUtils.postOnMain(new Runnable() {
+                            @Override
+                            public void run() {
+                                mBus.post(TLPercEvent.CONNECTED);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -105,6 +119,31 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
 
                 @Override
                 public void onLoaderReset(Loader<Void> loader) {
+
+                }
+            };
+
+    private final LoaderManager.LoaderCallbacks<CharSequence> mReadCallback =
+            new LoaderManager.LoaderCallbacks<CharSequence>() {
+                @Override
+                public Loader<CharSequence> onCreateLoader(int id, Bundle args) {
+                    return new BluetoothReadTask(mActivity, mReader);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<CharSequence> loader, final CharSequence data) {
+                    if (data != null) {
+                        HandlerUtils.postOnMain(new Runnable() {
+                            @Override
+                            public void run() {
+                                mBus.post(new BluetoothReadEvent(self, data));
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(Loader<CharSequence> loader) {
 
                 }
             };

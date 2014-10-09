@@ -1,36 +1,36 @@
 package info.izumin.android.tlperc.loader.task;
 
-import android.bluetooth.BluetoothSocket;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
  * Created by izumin on 2014/10/10.
  */
-public class BluetoothConnectTask extends AsyncTaskLoader<Void> {
-    public static final String TAG = BluetoothConnectTask.class.getSimpleName();
+public class BluetoothReadTask extends AsyncTaskLoader<CharSequence> {
+    public static final String TAG = BluetoothReadTask.class.getSimpleName();
 
-    private BluetoothSocket mSocket;
+    private BufferedReader mReader;
 
-    public BluetoothConnectTask(Context context, BluetoothSocket socket) {
+    public BluetoothReadTask(Context context, BufferedReader reader) {
         super(context);
-        mSocket = socket;
+        mReader = reader;
     }
 
     @Override
-    public Void loadInBackground() {
+    public CharSequence loadInBackground() {
         try {
-            mSocket.connect();
+            return mReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
+            return "00";
         }
-        return null;
     }
 
     @Override
-    public void deliverResult(Void data) {
+    public void deliverResult(CharSequence data) {
         if (isStarted()) super.deliverResult(data);
     }
 
