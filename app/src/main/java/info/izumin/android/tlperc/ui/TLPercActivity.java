@@ -48,7 +48,11 @@ public class TLPercActivity extends KonashiActivity {
     @Subscribe
     public void onTLPercEventCallback(TLPercEvent event) {
         switch (event) {
+            case DECIDED:
+                mConnectingProcessDialog.show(getFragmentManager(), DIALOG_FRAGMENT);
+                break;
             case CONNECTED:
+                mConnectingProcessDialog.dismiss();
                 mConnectedToast.show();
                 mSoundManager.play(SE_CONNECTED);
                 transitionPercussionFragment();
@@ -79,7 +83,7 @@ public class TLPercActivity extends KonashiActivity {
         Bus bus = BusProvider.getInstance();
         bus.register(this);
         mBluetoothHelper = new BluetoothHelper(this, bus);
-        mConnectingProcessDialog = ProgressDialogFragment.newInstance("接続中…", "Konashiに接続しています", true);
+        mConnectingProcessDialog = ProgressDialogFragment.newInstance("T☆L Perc!", "接続中やでｗ", true);
         mConnectedToast = Crouton.makeText(this, "接続できたでｗ", Style.INFO);
         mDisconnectedToast = Crouton.makeText(this, "接続切れたでｗ", Style.ALERT);
         mSoundManager = new SoundManager(getApplicationContext());

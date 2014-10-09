@@ -70,6 +70,7 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
     public void onDeviceDecided(BluetoothDevice device) throws IOException {
         mDevice = device;
         mSocket = device.createRfcommSocketToServiceRecord(device.getUuids()[0].getUuid());
+        mBus.post(TLPercEvent.DECIDED);
         mActivity.getLoaderManager().initLoader(0, null, mConnectCallback);
     }
 
