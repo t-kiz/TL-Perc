@@ -13,6 +13,7 @@ public class BluetoothReadTask extends AsyncTaskLoader<CharSequence> {
     public static final String TAG = BluetoothReadTask.class.getSimpleName();
 
     private BufferedReader mReader;
+    private CharSequence mCachedData;
 
     public BluetoothReadTask(Context context, BufferedReader reader) {
         super(context);
@@ -31,12 +32,23 @@ public class BluetoothReadTask extends AsyncTaskLoader<CharSequence> {
 
     @Override
     public void deliverResult(CharSequence data) {
+        if (isReset()) {
+            if (mCachedData != null) mCachedData = null;
+            return;
+        }
+        mCachedData = data;
         if (isStarted()) super.deliverResult(data);
     }
 
     @Override
     protected void onStartLoading() {
-        forceLoad();
+        if (mCachedData != null) {
+            deliverResult(mCachedData);
+            return;
+        }
+        if (takeContentChanged() || mCachedData == null) {
+            forceLoad();
+        }
     }
 
     @Override
