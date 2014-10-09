@@ -14,9 +14,11 @@ import com.uxxu.konashi.lib.KonashiEvent;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import info.izumin.android.tlperc.R;
+import info.izumin.android.tlperc.event.TLPercEvent;
 import info.izumin.android.tlperc.model.BusProvider;
 import info.izumin.android.tlperc.model.SoundManager;
 import info.izumin.android.tlperc.model.TLPercKonashiObserver;
+import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 
 public class TLPercActivity extends KonashiActivity {
     public static final String TAG = TLPercActivity.class.getSimpleName();
@@ -28,6 +30,8 @@ public class TLPercActivity extends KonashiActivity {
     private TLPercKonashiObserver mKonashiObserver;
     private ProgressDialogFragment mConnectingProcessDialog;
     private Crouton mConnectedToast, mDisconnectedToast;
+
+    private BluetoothHelper mBluetoothHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +49,25 @@ public class TLPercActivity extends KonashiActivity {
     }
 
     @Subscribe
+    public void onTLPercEventCallback(TLPercEvent event) {
+        switch (event) {
+            case CONNECTED:
+                mConnectedToast.show();
+                mSoundManager.play(SE_CONNECTED);
+                transitionPercussionFragment();
+                break;
+        }
+    }
+
+    @Subscribe
     public void onKonashiCallback(KonashiEvent event) {
         Log.d(TAG, event.name());
         Crouton.cancelAllCroutons();
         switch(event) {
             case CONNECTED:
-                mConnectingProcessDialog.show(getFragmentManager(), DIALOG_FRAGMENT);
                 break;
             case READY:
-                mConnectingProcessDialog.dismiss();
                 mSoundManager.play(SE_CONNECTED);
-                mConnectedToast.show();
-                transitionPercussionFragment();
                 break;
             case DISCONNECTED:
                 mSoundManager.play(SE_DISCONNECTED);
@@ -66,15 +77,10 @@ public class TLPercActivity extends KonashiActivity {
         }
     }
 
-    @Subscribe
-    public void onKonashiError(KonashiErrorReason errorReason) {
-        Log.d(TAG, errorReason.name());
-    }
-
     private void initialize() {
         Bus bus = BusProvider.getInstance();
         bus.register(this);
-        mKonashiObserver = new TLPercKonashiObserver(this, bus);
+        mBluetoothHelper = new BluetoothHelper(this, bus);
         mConnectingProcessDialog = ProgressDialogFragment.newInstance("接続中…", "Konashiに接続しています", true);
         mConnectedToast = Crouton.makeText(this, "接続できたでｗ", Style.INFO);
         mDisconnectedToast = Crouton.makeText(this, "接続切れたでｗ", Style.ALERT);
@@ -84,10 +90,12 @@ public class TLPercActivity extends KonashiActivity {
     }
 
     private void transitionFindKonashiFragment() {
+        FindKonashiFragment f = FindKonashiFragment.newInstance();
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.root_container, FindKonashiFragment.newInstance(), FindKonashiFragment.TAG)
+                .replace(R.id.root_container, f, FindKonashiFragment.TAG)
                 .commit();
+        f.setBluetoothHelper(mBluetoothHelper);
     }
 
     private void transitionPercussionFragment() {

@@ -12,6 +12,7 @@ import com.uxxu.konashi.lib.KonashiActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import info.izumin.android.tlperc.R;
+import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 
 /**
  * Created by izumin on 2014/10/08.
@@ -19,7 +20,7 @@ import info.izumin.android.tlperc.R;
 public class FindKonashiFragment extends Fragment {
     public static final String TAG = FindKonashiFragment.class.getSimpleName();
 
-    private KonashiActivity mActivity;
+    private BluetoothHelper mBluetoothHelper;
 
     public static FindKonashiFragment newInstance() {
         FindKonashiFragment f = new FindKonashiFragment();
@@ -30,12 +31,16 @@ public class FindKonashiFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find_konashi, container, false);
         ButterKnife.inject(this, view);
-        mActivity = (KonashiActivity) getActivity();
         return view;
     }
 
     @OnClick(R.id.find_konashi_view)
     public void onClickFindKonashiView() {
-        mActivity.getKonashiManager().find(mActivity);
+        mBluetoothHelper.connect();
+    }
+
+    // TODO: bad practice
+    public void setBluetoothHelper(BluetoothHelper helper) {
+        mBluetoothHelper = helper;
     }
 }

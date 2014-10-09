@@ -48,7 +48,7 @@
         jar="/Users/izumin/Documents/works/tlperc/app/build/intermediates/exploded-aar/tlperc.modules/Konashi/unspecified/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="5244dbbeff9d18902bde9c95c2d6f6b77844d159"/>
+        sha1="3b022770c0f4e311ad6c168bf355b5d5df047554"/>
     <item
         dex="/Users/izumin/Documents/works/tlperc/app/build/intermediates/pre-dexed/debug/dagger-1.2.2-97ab7be623490e5505e244b854365cd152d2ead0.jar"
         jar="/Users/izumin/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger/1.2.2/e8f912ee19ad84958510883ea191135276b091f8/dagger-1.2.2.jar"
