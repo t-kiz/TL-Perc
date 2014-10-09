@@ -53,6 +53,11 @@ public class TLPercActivity extends KonashiActivity {
                 mSoundManager.play(SE_CONNECTED);
                 transitionPercussionFragment();
                 break;
+            case DISCONNECTED:
+                mSoundManager.play(SE_DISCONNECTED);
+                mDisconnectedToast.show();
+                getFragmentManager().popBackStack();
+                break;
         }
     }
 
@@ -66,9 +71,6 @@ public class TLPercActivity extends KonashiActivity {
                 mSoundManager.play(SE_CONNECTED);
                 break;
             case DISCONNECTED:
-                mSoundManager.play(SE_DISCONNECTED);
-                mDisconnectedToast.show();
-                getFragmentManager().popBackStack();
                 break;
         }
     }

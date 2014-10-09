@@ -26,7 +26,7 @@ public class BluetoothReadTask extends AsyncTaskLoader<CharSequence> {
             return mReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
-            return "00";
+            return null;
         }
     }
 

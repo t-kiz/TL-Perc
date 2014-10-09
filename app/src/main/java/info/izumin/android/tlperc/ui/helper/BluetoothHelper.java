@@ -132,14 +132,17 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
 
                 @Override
                 public void onLoadFinished(Loader<CharSequence> loader, final CharSequence data) {
-                    if (data != null) {
-                        HandlerUtils.postOnMain(new Runnable() {
-                            @Override
-                            public void run() {
+                    HandlerUtils.postOnMain(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (data == null) {
+                                disconnect();
+                                mBus.post(TLPercEvent.DISCONNECTED);
+                            } else {
                                 mBus.post(new BluetoothReadEvent(self, data));
                             }
-                        });
-                    }
+                        }
+                    });
                 }
 
                 @Override
