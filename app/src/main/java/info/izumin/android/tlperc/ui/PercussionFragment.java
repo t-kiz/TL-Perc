@@ -16,6 +16,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.Optional;
 import info.izumin.android.tlperc.R;
 import info.izumin.android.tlperc.event.BluetoothReadEvent;
 import info.izumin.android.tlperc.media.DrumsSound;
@@ -31,16 +33,16 @@ import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 public class PercussionFragment extends Fragment {
     public static final String TAG = PercussionFragment.class.getSimpleName();
 
+    private static final String SE_REPLACE = "SE replace";
+
     private BluetoothHelper mBluetoothHelper;
 
-    private SoundManager mCurrentSoundManager;
-    private SoundManager mDrumsSoundManager;
-    private SoundManager mPercSoundManager;
-    private SoundManager mPianoSoundManager;
+    private SoundManager mCurrentSoundManager, mButtonSoundManager;
+    private SoundManager mDrumsSoundManager, mPercSoundManager, mPianoSoundManager;
 
-    @InjectView(R.id.btn_drums) ImageView mBtnDrums;
-    @InjectView(R.id.btn_perc) ImageView mBtnPerc;
-    @InjectView(R.id.btn_piano) ImageView mBtnPiano;
+    @Optional @InjectView(R.id.btn_drums) ImageView mBtnDrums;
+    @Optional @InjectView(R.id.btn_perc) ImageView mBtnPerc;
+    @Optional @InjectView(R.id.btn_piano) ImageView mBtnPiano;
 
     private CharSequence mPrevData = "00";
 
@@ -68,6 +70,29 @@ public class PercussionFragment extends Fragment {
         mBluetoothHelper.disconnect();
         BusProvider.getInstance().unregister(this);
         super.onDestroyView();
+    }
+
+    @Optional
+    @OnClick({R.id.btn_drums, R.id.btn_perc, R.id.btn_piano})
+    public void onClickChangeInstrumentsButton(View v) {
+        mBtnDrums.setImageResource(R.drawable.ic_drums_off);
+        mBtnPerc.setImageResource(R.drawable.ic_perc_off);
+        mBtnPiano.setImageResource(R.drawable.ic_piano_off);
+        switch (v.getId()) {
+            case R.id.btn_drums:
+                mCurrentSoundManager = mDrumsSoundManager;
+                mBtnDrums.setImageResource(R.drawable.ic_drums_on);
+                break;
+            case R.id.btn_perc:
+                mCurrentSoundManager = mPercSoundManager;
+                mBtnPerc.setImageResource(R.drawable.ic_perc_on);
+                break;
+            case R.id.btn_piano:
+                mCurrentSoundManager = mPianoSoundManager;
+                mBtnPiano.setImageResource(R.drawable.ic_piano_on);
+                break;
+        }
+        mButtonSoundManager.play(SE_REPLACE);
     }
 
     @Subscribe
@@ -104,6 +129,9 @@ public class PercussionFragment extends Fragment {
             mPianoSoundManager.load(sound.name(), sound.getRawId());
         }
         mCurrentSoundManager = mDrumsSoundManager;
+
+        mButtonSoundManager = new SoundManager(getActivity().getApplicationContext());
+        mButtonSoundManager.load(SE_REPLACE, R.raw.replace);
         mBtnDrums.setImageResource(R.drawable.ic_drums_on);
         int height = - DisplayUtils.getDisplayHeight(getActivity()) / 8;
         mBtnDrums.setTranslationY(height);
