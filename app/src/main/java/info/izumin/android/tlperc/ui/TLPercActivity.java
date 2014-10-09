@@ -1,12 +1,11 @@
 package info.izumin.android.tlperc.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.amalgam.app.ProgressDialogFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.uxxu.konashi.lib.KonashiActivity;
-import com.uxxu.konashi.lib.KonashiEvent;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -17,14 +16,13 @@ import info.izumin.android.tlperc.model.SoundManager;
 import info.izumin.android.tlperc.model.TLPercKonashiObserver;
 import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 
-public class TLPercActivity extends KonashiActivity {
+public class TLPercActivity extends Activity {
     public static final String TAG = TLPercActivity.class.getSimpleName();
 
     private static final String DIALOG_FRAGMENT = "dialog fragment";
     private static final String SE_CONNECTED = "Connected", SE_DISCONNECTED = "Disconnected";
 
     private SoundManager mSoundManager;
-    private TLPercKonashiObserver mKonashiObserver;
     private ProgressDialogFragment mConnectingProcessDialog;
     private Crouton mConnectedToast, mDisconnectedToast;
 
@@ -65,20 +63,6 @@ public class TLPercActivity extends KonashiActivity {
         }
     }
 
-    @Subscribe
-    public void onKonashiCallback(KonashiEvent event) {
-        Crouton.cancelAllCroutons();
-        switch(event) {
-            case CONNECTED:
-                break;
-            case READY:
-                mSoundManager.play(SE_CONNECTED);
-                break;
-            case DISCONNECTED:
-                break;
-        }
-    }
-
     private void initialize() {
         Bus bus = BusProvider.getInstance();
         bus.register(this);
@@ -92,10 +76,10 @@ public class TLPercActivity extends KonashiActivity {
     }
 
     private void transitionFindKonashiFragment() {
-        FindKonashiFragment f = FindKonashiFragment.newInstance();
+        ConnectFragment f = ConnectFragment.newInstance();
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.root_container, f, FindKonashiFragment.TAG)
+                .replace(R.id.root_container, f, ConnectFragment.TAG)
                 .commit();
         f.setBluetoothHelper(mBluetoothHelper);
     }
@@ -104,7 +88,7 @@ public class TLPercActivity extends KonashiActivity {
         PercussionFragment f = PercussionFragment.newInstance();
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(FindKonashiFragment.TAG)
+                .addToBackStack(ConnectFragment.TAG)
                 .replace(R.id.root_container, f, PercussionFragment.TAG)
                 .commit();
         f.setBluetoothHelper(mBluetoothHelper);

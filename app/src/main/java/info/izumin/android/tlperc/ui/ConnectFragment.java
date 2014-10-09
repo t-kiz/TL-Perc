@@ -14,19 +14,19 @@ import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
 /**
  * Created by izumin on 2014/10/08.
  */
-public class FindKonashiFragment extends Fragment {
-    public static final String TAG = FindKonashiFragment.class.getSimpleName();
+public class ConnectFragment extends Fragment {
+    public static final String TAG = ConnectFragment.class.getSimpleName();
 
     private BluetoothHelper mBluetoothHelper;
 
-    public static FindKonashiFragment newInstance() {
-        FindKonashiFragment f = new FindKonashiFragment();
+    public static ConnectFragment newInstance() {
+        ConnectFragment f = new ConnectFragment();
         return f;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_find_konashi, container, false);
+        View view = inflater.inflate(R.layout.fragment_connect, container, false);
         ButterKnife.inject(this, view);
         return view;
     }
