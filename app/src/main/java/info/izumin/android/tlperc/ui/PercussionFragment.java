@@ -2,11 +2,15 @@ package info.izumin.android.tlperc.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import info.izumin.android.tlperc.R;
@@ -23,7 +27,11 @@ public class PercussionFragment extends Fragment {
     public static final String TAG = PercussionFragment.class.getSimpleName();
 
     private BluetoothHelper mBluetoothHelper;
+
+    private SoundManager mCurrentSoundManager;
     private SoundManager mDrumsSoundManager;
+
+    private CharSequence mPrevData = "00";
 
     public static PercussionFragment newInstance() {
         PercussionFragment f = new PercussionFragment();
@@ -51,6 +59,20 @@ public class PercussionFragment extends Fragment {
 
     @Subscribe
     public void onBluetoothReadEvent(BluetoothReadEvent event) {
+        if (!event.getData().equals(mPrevData)) {
+            mPrevData = event.getData();
+            String str = "";
+            int value = Integer.parseInt(event.getData().toString(), 16);
+            List<String> keys = new ArrayList<String>();
+            for (int i = 0; value != 0 && i < 8; i++) {
+                if ((value & (int) Math.pow(2, i)) > 0) {
+                    keys.add(DrumsSound.values()[i].name());
+                    str += DrumsSound.values()[i].name() + " ";
+                }
+            }
+            Log.d(TAG, str);
+            for (String key : keys) mCurrentSoundManager.play(key);
+        }
         mBluetoothHelper.asyncRead();
     }
 
@@ -60,6 +82,7 @@ public class PercussionFragment extends Fragment {
         for (DrumsSound sound : DrumsSound.values()) {
             mDrumsSoundManager.load(sound.name(), sound.getRawId());
         }
+        mCurrentSoundManager = mDrumsSoundManager;
     }
 
     // TODO: bad practice
