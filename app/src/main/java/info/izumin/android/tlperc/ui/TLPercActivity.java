@@ -47,6 +47,7 @@ public class TLPercActivity extends KonashiActivity {
     @Subscribe
     public void onKonashiCallback(KonashiEvent event) {
         Log.d(TAG, event.name());
+        Crouton.cancelAllCroutons();
         switch(event) {
             case CONNECTED:
                 mConnectingProcessDialog.show(getFragmentManager(), DIALOG_FRAGMENT);
@@ -59,7 +60,6 @@ public class TLPercActivity extends KonashiActivity {
                 break;
             case DISCONNECTED:
                 mSoundManager.play(SE_DISCONNECTED);
-                mConnectedToast.cancel();
                 mDisconnectedToast.show();
                 getFragmentManager().popBackStack();
                 break;
