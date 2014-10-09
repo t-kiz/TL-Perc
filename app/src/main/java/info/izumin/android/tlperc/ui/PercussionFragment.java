@@ -12,6 +12,7 @@ import com.uxxu.konashi.lib.KonashiManager;
 
 import butterknife.ButterKnife;
 import info.izumin.android.tlperc.R;
+import info.izumin.android.tlperc.model.SoundManager;
 
 /**
  * Created by izumin on 2014/10/08.
@@ -21,6 +22,7 @@ public class PercussionFragment extends Fragment {
 
     private KonashiActivity mActivity;
     private KonashiManager mKonashiManager;
+    private SoundManager mSoundManager;
 
     public static PercussionFragment newInstance() {
         PercussionFragment f = new PercussionFragment();
@@ -31,12 +33,7 @@ public class PercussionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_percussion, container, false);
         ButterKnife.inject(this, view);
-        mActivity = (KonashiActivity) getActivity();
-        mKonashiManager = mActivity.getKonashiManager();
-        mKonashiManager.pinMode(Konashi.S1, Konashi.INPUT);
-        mKonashiManager.pinMode(Konashi.PIO0, Konashi.INPUT);
-        mKonashiManager.pinMode(Konashi.PIO1, Konashi.INPUT);
-        mKonashiManager.pinMode(Konashi.PIO2, Konashi.INPUT);
+        initialize();
         return view;
     }
 
@@ -44,5 +41,16 @@ public class PercussionFragment extends Fragment {
     public void onDestroyView() {
         if (mKonashiManager.isConnected()) mKonashiManager.disconnect();
         super.onDestroyView();
+    }
+
+    private void initialize() {
+        mActivity = (KonashiActivity) getActivity();
+        mKonashiManager = mActivity.getKonashiManager();
+        mSoundManager = new SoundManager(mActivity.getApplicationContext());
+
+        mKonashiManager.pinMode(Konashi.S1, Konashi.INPUT);
+        mKonashiManager.pinMode(Konashi.PIO0, Konashi.INPUT);
+        mKonashiManager.pinMode(Konashi.PIO1, Konashi.INPUT);
+        mKonashiManager.pinMode(Konashi.PIO2, Konashi.INPUT);
     }
 }
