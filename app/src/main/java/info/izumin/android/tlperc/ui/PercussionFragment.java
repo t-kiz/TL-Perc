@@ -12,6 +12,7 @@ import com.uxxu.konashi.lib.KonashiManager;
 
 import butterknife.ButterKnife;
 import info.izumin.android.tlperc.R;
+import info.izumin.android.tlperc.media.DrumsSound;
 import info.izumin.android.tlperc.model.SoundManager;
 
 /**
@@ -22,7 +23,7 @@ public class PercussionFragment extends Fragment {
 
     private KonashiActivity mActivity;
     private KonashiManager mKonashiManager;
-    private SoundManager mSoundManager;
+    private SoundManager mDrumsSoundManager;
 
     public static PercussionFragment newInstance() {
         PercussionFragment f = new PercussionFragment();
@@ -46,7 +47,10 @@ public class PercussionFragment extends Fragment {
     private void initialize() {
         mActivity = (KonashiActivity) getActivity();
         mKonashiManager = mActivity.getKonashiManager();
-        mSoundManager = new SoundManager(mActivity.getApplicationContext());
+        mDrumsSoundManager = new SoundManager(mActivity.getApplicationContext());
+        for (DrumsSound sound : DrumsSound.values()) {
+            mDrumsSoundManager.load(sound.name(), sound.getRawId());
+        }
 
         mKonashiManager.pinMode(Konashi.S1, Konashi.INPUT);
         mKonashiManager.pinMode(Konashi.PIO0, Konashi.INPUT);
