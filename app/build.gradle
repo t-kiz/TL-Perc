@@ -24,8 +24,10 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.2.1'
     compile 'com.squareup:otto:1.3.5'
     compile 'com.jakewharton:butterknife:5.1.0'
-    // TODO: mavenCentralから取ってこれないので.jarを追加して対処
-//    compile 'jp.co.nohana:Amalgam:0.3.2'
+    compile 'jp.co.nohana:Amalgam:0.3.2@aar'
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.4') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
     compile 'info.izumin.android:daggerhelpers:0.0.1'
     compile project(':modules:Konashi')
     compile fileTree(dir: 'libs', include: ['*.jar'])
