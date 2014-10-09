@@ -14,6 +14,18 @@
         revision="20.0.0"
         sha1="be99d4453719f65db3956cbf959e0bb781e377cf"/>
     <item
+        dex="/Users/izumin/Documents/works/tlperc/app/build/intermediates/pre-dexed/debug/crouton-1.8.4-0cefcf04e27e0117877720180d5fcfb7ee0c7f27.jar"
+        jar="/Users/izumin/.gradle/caches/modules-2/files-2.1/de.keyboardsurfer.android.widget/crouton/1.8.4/c2544779f1579b0fd6e81590812fcdea034e6a69/crouton-1.8.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="c2544779f1579b0fd6e81590812fcdea034e6a69"/>
+    <item
+        dex="/Users/izumin/Documents/works/tlperc/app/build/intermediates/pre-dexed/debug/support-v4-19.0.1-1ecc199cad2a0d3ccf804f8916bfda78d3db4647.jar"
+        jar="/usr/local/opt/android-sdk/extras/android/m2repository/com/android/support/support-v4/19.0.1/support-v4-19.0.1.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
+    <item
         dex="/Users/izumin/Documents/works/tlperc/app/build/intermediates/pre-dexed/debug/otto-1.3.5-20f19ed7919f6e872808a32c33a9b2665256937b.jar"
         jar="/Users/izumin/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.5/7941cd2c2c8ec006800d75c35f8a9dacf892ab93/otto-1.3.5.jar"
         jumboMode="false"
@@ -25,6 +37,12 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="6975da39a7040257bd51d21a231b76c915872d38"/>
+    <item
+        dex="/Users/izumin/Documents/works/tlperc/app/build/intermediates/pre-dexed/debug/classes-94735c7d0406e57d21cc4feda6a9fd029db53e78.jar"
+        jar="/Users/izumin/Documents/works/tlperc/app/build/intermediates/exploded-aar/jp.co.nohana/Amalgam/0.3.2/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="f3eea066d35fd19eba26bd5877c4baaf9e935904"/>
     <item
         dex="/Users/izumin/Documents/works/tlperc/app/build/intermediates/pre-dexed/debug/classes-971aac3b7bf31f6894a005029fd2ef6ac168a63a.jar"
         jar="/Users/izumin/Documents/works/tlperc/app/build/intermediates/exploded-aar/tlperc.modules/Konashi/unspecified/classes.jar"
