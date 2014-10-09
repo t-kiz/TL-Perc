@@ -4,9 +4,13 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import info.izumin.android.tlperc.media.Sound;
 
 /**
  * Created by izumin on 2014/10/09.
@@ -20,6 +24,7 @@ public class SoundManager {
     private SoundPool mSoundPool;
     private AudioManager mAudioManager;
     private Map<String, Integer> mLoadedSounds;
+    private List<String> mLoadedSoundKeys;
 
     private int mSoundVolume;
 
@@ -33,6 +38,7 @@ public class SoundManager {
     public void load(String key, int rawId) {
         int soundId = mSoundPool.load(mContext, rawId, 0);
         mLoadedSounds.put(key, soundId);
+        mLoadedSoundKeys.add(key);
     }
 
     public int play(String key) {
@@ -43,13 +49,14 @@ public class SoundManager {
     public void initialize() {
         mSoundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         mLoadedSounds = new HashMap<String, Integer>();
+        mLoadedSoundKeys = new ArrayList<String>();
     }
 
     public void release() {
         mSoundPool.release();
     }
 
-    public Set<String> getLoadedSoundKeys() {
-        return mLoadedSounds.keySet();
+    public List<String> getLoadedSoundKeys() {
+        return mLoadedSoundKeys;
     }
 }

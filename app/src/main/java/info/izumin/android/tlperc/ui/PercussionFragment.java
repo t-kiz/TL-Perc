@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 import info.izumin.android.tlperc.R;
 import info.izumin.android.tlperc.event.BluetoothReadEvent;
 import info.izumin.android.tlperc.media.DrumsSound;
+import info.izumin.android.tlperc.media.PercSound;
+import info.izumin.android.tlperc.media.PianoSound;
 import info.izumin.android.tlperc.model.BusProvider;
 import info.izumin.android.tlperc.model.SoundManager;
 import info.izumin.android.tlperc.ui.helper.BluetoothHelper;
@@ -30,6 +32,8 @@ public class PercussionFragment extends Fragment {
 
     private SoundManager mCurrentSoundManager;
     private SoundManager mDrumsSoundManager;
+    private SoundManager mPercSoundManager;
+    private SoundManager mPianoSoundManager;
 
     private CharSequence mPrevData = "00";
 
@@ -68,8 +72,8 @@ public class PercussionFragment extends Fragment {
             List<String> keys = new ArrayList<String>();
             for (int i = 0; value != 0 && i < 8; i++) {
                 if ((value & (int) Math.pow(2, i)) > 0) {
-                    keys.add(DrumsSound.values()[i].name());
-                    str += DrumsSound.values()[i].name() + " ";
+                    keys.add(mCurrentSoundManager.getLoadedSoundKeys().get(i));
+                    str += mCurrentSoundManager.getLoadedSoundKeys().get(i) + " ";
                 }
             }
             Log.d(TAG, str);
@@ -83,6 +87,14 @@ public class PercussionFragment extends Fragment {
         mDrumsSoundManager = new SoundManager(getActivity().getApplicationContext());
         for (DrumsSound sound : DrumsSound.values()) {
             mDrumsSoundManager.load(sound.name(), sound.getRawId());
+        }
+        mPercSoundManager = new SoundManager(getActivity().getApplicationContext());
+        for (PercSound sound : PercSound.values()) {
+            mPercSoundManager.load(sound.name(), sound.getRawId());
+        }
+        mPianoSoundManager = new SoundManager(getActivity().getApplicationContext());
+        for (PianoSound sound : PianoSound.values()) {
+            mPianoSoundManager.load(sound.name(), sound.getRawId());
         }
         mCurrentSoundManager = mDrumsSoundManager;
     }
