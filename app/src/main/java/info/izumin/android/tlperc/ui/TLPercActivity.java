@@ -40,7 +40,7 @@ public class TLPercActivity extends KonashiActivity {
 
     @Override
     protected void onDestroy() {
-        if (getKonashiManager().isConnected()) getKonashiManager().disconnect();
+        mBluetoothHelper.disconnect();
         BusProvider.getInstance().unregister(this);
         super.onDestroy();
     }

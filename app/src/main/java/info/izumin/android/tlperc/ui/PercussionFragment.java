@@ -54,6 +54,8 @@ public class PercussionFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        mBluetoothHelper.disconnect();
+        BusProvider.getInstance().unregister(this);
         super.onDestroyView();
     }
 
