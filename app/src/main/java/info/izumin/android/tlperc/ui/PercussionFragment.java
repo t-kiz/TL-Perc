@@ -95,7 +95,7 @@ public class PercussionFragment extends Fragment {
                 mBtnPiano.setImageResource(R.drawable.ic_piano_on);
                 break;
         }
-        mVibrator.vibrate(10);
+        mVibrator.vibrate(300);
         mButtonSoundManager.play(SE_REPLACE);
     }
 
