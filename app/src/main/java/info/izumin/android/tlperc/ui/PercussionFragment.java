@@ -1,7 +1,9 @@
 package info.izumin.android.tlperc.ui;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,7 @@ public class PercussionFragment extends Fragment {
 
     private BluetoothHelper mBluetoothHelper;
 
+    private Vibrator mVibrator;
     private SoundManager mCurrentSoundManager, mButtonSoundManager;
     private SoundManager mDrumsSoundManager, mPercSoundManager, mPianoSoundManager;
 
@@ -92,6 +95,7 @@ public class PercussionFragment extends Fragment {
                 mBtnPiano.setImageResource(R.drawable.ic_piano_on);
                 break;
         }
+        mVibrator.vibrate(10);
         mButtonSoundManager.play(SE_REPLACE);
     }
 
@@ -137,6 +141,7 @@ public class PercussionFragment extends Fragment {
         mBtnDrums.setTranslationY(height);
         mBtnPerc.setTranslationY(height);
         mBtnPiano.setTranslationY(height);
+        mVibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     // TODO: bad practice

@@ -55,7 +55,7 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
     }
 
     public void disconnect() {
-        mActivity.getLoaderManager().initLoader(1, null, mDisconnectCallback);
+        mActivity.getLoaderManager().restartLoader(1, null, mDisconnectCallback);
     }
 
     public void asyncRead() {
@@ -71,7 +71,7 @@ public class BluetoothHelper implements BluetoothDeviceListDialogFragment.Callba
         mDevice = device;
         mSocket = device.createRfcommSocketToServiceRecord(device.getUuids()[0].getUuid());
         mBus.post(TLPercEvent.DECIDED);
-        mActivity.getLoaderManager().initLoader(0, null, mConnectCallback);
+        mActivity.getLoaderManager().restartLoader(0, null, mConnectCallback);
     }
 
     /* ================================================================
