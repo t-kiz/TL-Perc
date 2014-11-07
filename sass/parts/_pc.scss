@@ -19,6 +19,14 @@ hr {
   border-bottom:1px solid $brand-color-700;
 }
 
+div.social-buttons {
+  padding: 10px 0;
+  text-align: center;
+  > * {
+    display: inline-block;
+  }
+}
+
 section {
   padding: 20px;
   ul.card-list {
