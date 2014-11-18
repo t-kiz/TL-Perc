@@ -24,6 +24,7 @@ import info.izumin.android.tlperc.R;
 import info.izumin.android.tlperc.event.BluetoothReadEvent;
 import info.izumin.android.tlperc.media.DrumsSound;
 import info.izumin.android.tlperc.media.PercSound;
+import info.izumin.android.tlperc.media.Piano2Sound;
 import info.izumin.android.tlperc.media.PianoSound;
 import info.izumin.android.tlperc.model.BusProvider;
 import info.izumin.android.tlperc.model.SoundManager;
@@ -129,7 +130,7 @@ public class PercussionFragment extends Fragment {
             mPercSoundManager.load(sound.name(), sound.getRawId());
         }
         mPianoSoundManager = new SoundManager(getActivity().getApplicationContext());
-        for (PianoSound sound : PianoSound.values()) {
+        for (Piano2Sound sound : Piano2Sound.values()) {
             mPianoSoundManager.load(sound.name(), sound.getRawId());
         }
         mCurrentSoundManager = mDrumsSoundManager;
